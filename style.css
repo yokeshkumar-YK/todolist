@@ -18,7 +18,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
- background-image: url("todolist/Blue and White Illustrative Mountain Presentation.png");
+ background-image: url("Blue and White Illustrative Mountain Presentation.png");
 
   /* Ensure it covers the container without repeating */
   background-repeat: no-repeat;
