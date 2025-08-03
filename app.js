@@ -9,7 +9,6 @@ todoForm.addEventListener('submit', function(e){
     e.preventDefault();
     addTodo();
 })
-
 function addTodo(){
     const todoText = todoInput.value.trim();
     if(todoText.length > 0){
