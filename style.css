@@ -1,0 +1,176 @@
+/* ===================== RESET & BASE STYLING ===================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16pt;
+  color: #F9F9F9; /* text-color */
+}
+
+body {
+  min-height: 100vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ background-image: url("Blue and White Illustrative Mountain Presentation.gif");
+
+  /* Ensure it covers the container without repeating */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+}
+
+h1 {
+  margin-top: 100px;
+  margin-bottom: 20px;
+  font-size: 3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  color: #05090c; /* accent-color */
+}
+
+/* ===================== TODO WRAPPER & FORM STRUCTURE ===================== */
+
+.wrapper {
+  width: 700px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form {
+  position: relative;
+  width: 100%;
+}
+
+/* ===================== INPUT + ADD BUTTON ===================== */
+
+#todo-input {
+  width: 100%;
+  padding: 12px 20px;
+  font: inherit;
+  background: none;
+  border: 2px solid #4A4D57; /* secondary-color */
+  border-radius: 1000px;
+  color: #F9F9F9; /* text-color */
+  caret-color: #030c0a; /* accent-color */
+}
+
+#todo-input:focus {
+  outline: none;
+}
+
+#add-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  padding: 0 30px;
+  border: none;
+  border-radius: 1000px;
+  font: inherit;
+  font-weight: 600;
+  background-color:#075b8b; /* primary-color */
+  color: #ffff; /* background-color (text-on-button) */
+  cursor: pointer;
+}
+
+/* ===================== TODO ITEM STYLING ===================== */
+
+.todo {
+  margin-bottom: 10px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  background-color:#075b8b; /* primary-color */
+  border-radius: 15px;
+}
+
+.todo .todo-text {
+  padding: 15px 0;
+  padding-right: 0;
+  flex-grow: 1;
+  transition: 200ms ease;
+}
+
+.delete-button {
+  padding: 3px;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.delete-button svg {
+  transition: 200ms ease;
+}
+
+.delete-button:hover svg {
+  fill: #ff0033; /* static warning color */
+}
+
+/* CHECKBOX VISUALS */
+
+input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 20px;
+  min-height: 20px;
+  margin-right: 10px;
+  border: 2px solid #00FFC4; /* accent-color */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 200ms ease;
+}
+
+input[type="checkbox"]:checked ~ .custom-checkbox {
+  background-color: #008cff; /* accent-color */
+  border-color: #ffffff;
+}
+
+input[type="checkbox"]:checked ~ .custom-checkbox svg {
+  fill: #ced9da; /* primary-color */
+}
+
+input[type="checkbox"]:checked ~ .todo-text {
+  text-decoration: line-through;
+  color: #ffffff; /* secondary-color */
+}
+
+/* ===================== RESPONSIVE ADJUSTMENTS ===================== */
+
+@media (max-width: 500px) {
+  html {
+    font-size: 12pt;
+  }
+
+  h1 {
+    margin-top: 50px;
+    font-size: 15vw;
+  }
+
+  #add-button {
+    position: static;
+    width: 100%;
+    margin-top: 10px;
+    padding: 15px;
+    height: auto;
+  }
+}
