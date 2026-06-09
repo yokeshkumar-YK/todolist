@@ -1,55 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App</title>
-    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <title>TaskFlow OS</title>
+
     <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+
+    <script defer src="script.js"></script>
 </head>
+
 <body>
-    <h1>Todo App</h1>
-    <div class="wrapper">
-        <form>
-            <input id="todo-input" type="text" 
-            placeholder="write anything and hit enter to add" autocomplete="off">
-            <button id="add-button">ADD</button>
-        </form>
-        <ul id="todo-list">
-             <li class="todo">
-                <input type="checkbox" id="todo-1">
-                <label class="custom-checkbox" for="todo-1">
-                    <svg fill="transparent" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
-                    </svg>
-                </label>
-                <label for="todo-1" class="todo-text">
-                    webdev project with html, css and js
-                </label>
-                <button class="delete-button">
-                    <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                        <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
-                    </svg>
-                </button>
-            </li>
-            <li class="todo">
-                <input type="checkbox" id="todo-2">
-                <label class="custom-checkbox" for="todo-2">
-                    <svg fill="transparent" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
-                    </svg>
-                </label>
-                <label for="todo-2" class="todo-text">
-                    webdev project with html, css and js
-                </label>
-                <button class="delete-button">
-                    <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
-                        <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
-                    </svg>
-                </button>
-            </li> 
-        </ul>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                TaskFlow
+            </div>
+            <ul>
+
+                <li class="active" data-section="dashboard">
+                    🏠 Dashboard
+                </li>
+
+                <li data-section="tasks">
+                    ✅ Tasks
+                </li>
+
+                <li data-section="goals">
+                    🎯 Goals
+                </li>
+
+                <li data-section="calendar">
+                    📅 Calendar
+                </li>
+
+                <li data-section="learning">
+                    📚 Learning
+                </li>
+
+                <li data-section="focus">
+                    ⏱ Focus
+                </li>
+
+                <li data-section="analytics">
+                    📊 Analytics
+                </li>
+
+                <li data-section="settings">
+                    ⚙ Settings
+                </li>
+
+            </ul>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+
+            <!-- Header -->
+            <header>
+
+                <h1>Welcome Back 👋</h1>
+
+                <div class="header-actions">
+
+                    <input type="text" id="search" placeholder="Search tasks...">
+
+                    <button id="theme-toggle">
+                        🌙
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- DASHBOARD -->
+            <section id="dashboardSection" class="content-section active-section">
+
+                <section class="stats">
+
+                    <div class="card yellow">
+                        <h3>Total Tasks</h3>
+                        <p id="totalTasks">0</p>
+                    </div>
+
+                    <div class="card blue">
+                        <h3>Pending</h3>
+                        <p id="pendingTasks">0</p>
+                    </div>
+
+                    <div class="card orange">
+                        <h3>Ongoing</h3>
+                        <p id="ongoingTasks">0</p>
+                    </div>
+
+                    <div class="card green">
+                        <h3>Completed</h3>
+                        <p id="completedTasks">0</p>
+                    </div>
+
+                </section>
+
+                <section class="progress-card">
+
+                    <h3>Progress</h3>
+
+                    <div class="progress-bar">
+
+                        <div id="progressFill"></div>
+
+                    </div>
+
+                    <span id="progressText">0%</span>
+
+                </section>
+
+            </section>
+
+            <!-- TASKS -->
+            <section id="tasksSection" class="content-section">
+
+                <section class="task-form">
+
+                    <input id="taskInput" placeholder="Enter task">
+
+                    <select id="priority">
+
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+
+                    </select>
+
+                    <select id="category">
+
+                        <option value="Learning">Learning</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+
+                    </select>
+
+                    <input type="date" id="dueDate">
+
+                    <button type="button" id="addTask">
+                        Add Task
+                    </button>
+
+                </section>
+
+                <section class="filters">
+
+                    <select id="statusFilter">
+
+                        <option value="all">All Tasks</option>
+
+                        <option value="Pending">Pending</option>
+
+                        <option value="Ongoing">Ongoing</option>
+
+                        <option value="Completed">Completed</option>
+
+                    </select>
+
+                </section>
+
+                <section class="task-section">
+
+                    <ul id="taskList"></ul>
+
+                </section>
+
+            </section>
+
+            <!-- GOALS -->
+            <section id="goalsSection" class="content-section">
+
+                <div class="card">
+
+                    <h2>🎯 Goals</h2>
+
+                    <br>
+
+                    <p>Build Portfolio Website</p>
+                    <progress value="80" max="100"></progress>
+
+                    <br><br>
+
+                    <p>Master React JS</p>
+                    <progress value="60" max="100"></progress>
+
+                    <br><br>
+
+                    <p>Get Software Engineer Job</p>
+                    <progress value="40" max="100"></progress>
+
+                </div>
+
+            </section>
+
+            <!-- CALENDAR -->
+            <section id="calendarSection" class="content-section">
+
+                <div class="calendar-card">
+
+                    <h2>📅 Calendar</h2>
+
+                    <br>
+
+                    <div id="todayDate"></div>
+
+                </div>
+
+            </section>
+
+            <!-- LEARNING -->
+            <section id="learningSection" class="content-section">
+
+                <div class="card">
+
+                    <h2>📚 Learning Hub</h2>
+
+                    <br>
+
+                    <ul>
+
+                        <li>JavaScript Fundamentals</li>
+
+                        <li>React JS Projects</li>
+
+                        <li>Node.js Backend</li>
+
+                        <li>DSA Problem Solving</li>
+
+                        <li>System Design Basics</li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+            <!-- FOCUS -->
+            <section id="focusSection" class="content-section">
+
+                <div class="card">
+
+                    <h2>⏱ Focus Timer</h2>
+
+                    <br>
+
+                    <h1 id="timer">25:00</h1>
+
+                    <br>
+
+                    <button id="startTimer">
+                        Start Pomodoro
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- ANALYTICS -->
+            <section id="analyticsSection" class="content-section">
+
+                <div class="card">
+
+                    <h2>📊 Analytics</h2>
+
+                    <br>
+
+                    <p>Weekly Productivity: 82%</p>
+
+                    <p>Completed Tasks: 45</p>
+
+                    <p>Focus Sessions: 12</p>
+
+                    <p>Total Study Hours: 28 hrs</p>
+
+                </div>
+
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="settingsSection" class="content-section">
+
+                <div class="card">
+
+                    <h2>⚙ Settings</h2>
+
+                    <br>
+
+                    <button id="theme-toggle">
+                        Toggle Theme
+                    </button>
+
+                    <br><br>
+
+                    <button id="clearTasks">
+                        Clear All Tasks
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
     </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+
+        <div class="modal-content">
+
+            <button id="closeModal" class="close-btn">
+
+                ✖
+
+            </button>
+
+            <h2>Edit Task</h2>
+
+            <input type="text" id="editInput">
+
+            <button id="saveEdit">
+
+                Save Changes
+
+            </button>
+
+        </div>
+
+    </div>
+
 </body>
+
 </html>
