@@ -1,348 +1,320 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TaskFlow OS</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
     <script defer src="script.js"></script>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">TaskFlow</div>
+        <ul>
+          <li class="active" data-section="dashboard">🏠 Dashboard</li>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
+          <li data-section="tasks">✅ Tasks</li>
 
-            <div class="logo">
-                TaskFlow
+          <li data-section="goals">🎯 Goals</li>
+
+          <li data-section="calendar">📅 Calendar</li>
+
+          <li data-section="learning">📚 Notes</li>
+
+          <li data-section="focus">⏱ Focus</li>
+
+          <li data-section="analytics">📊 Analytics</li>
+
+          <li data-section="settings">⚙ Settings</li>
+        </ul>
+      </aside>
+
+      <!-- Main -->
+      <main class="main">
+        <!-- Header -->
+        <header>
+          <h1>Welcome Back 👋</h1>
+
+          <div class="header-actions">
+            <button id="theme-toggle">🌙</button>
+          </div>
+        </header>
+
+        <!-- DASHBOARD -->
+        <section id="dashboardSection" class="content-section active-section">
+          <section class="stats">
+            <div class="card yellow">
+              <h3>Total Tasks</h3>
+              <p id="totalTasks">0</p>
             </div>
-            <ul>
 
-                <li class="active" data-section="dashboard">
-                    🏠 Dashboard
-                </li>
+            <div class="card blue">
+              <h3>Pending</h3>
+              <p id="pendingTasks">0</p>
+            </div>
+
+            <div class="card orange">
+              <h3>Ongoing</h3>
+              <p id="ongoingTasks">0</p>
+            </div>
+
+            <div class="card green">
+              <h3>Completed</h3>
+              <p id="completedTasks">0</p>
+            </div>
+          </section>
+
+          <section class="progress-card">
+            <h3>Progress</h3>
+
+            <div class="progress-bar">
+              <div id="progressFill"></div>
+            </div>
+
+            <span id="progressText">0%</span>
+          </section>
+        </section>
+
+        <!-- TASKS -->
+        <section id="tasksSection" class="content-section">
+          <section class="task-form">
+            <div class="form-group">
+              <label for="taskInput">Task Title *</label>
+              <input
+                id="taskInput"
+                type="text"
+                placeholder="Enter task title"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="priority">Priority</label>
+              <select id="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="category">Category</label>
+              <select id="category">
+                <option value="Learning">Learning</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="dueDate">Deadline Date *</label>
+              <input type="date" id="dueDate" required />
+            </div>
+
+            <button type="button" id="addTask">➕ Add Task</button>
+          </section>
+          <div class="task-search">
+            <input type="text" id="search" placeholder="🔍 Search tasks..." />
+          </div>
+          <section class="filters">
+            <select id="statusFilter">
+              <option value="all">All Tasks</option>
+
+              <option value="Pending">Pending</option>
+
+              <option value="Ongoing">Ongoing</option>
+
+              <option value="Completed">Completed</option>
+            </select>
+          </section>
+
+          <section class="task-section">
+            <ul id="taskList"></ul>
+          </section>
+        </section>
+
+        <section id="goalsSection" class="content-section">
+          <div class="goals-container">
+            <h2>🎯 Goal Tracker</h2>
+
+            <div class="goal-form">
+              <input type="text" id="goalInput" placeholder="Enter your goal" />
+
+              <select id="goalType">
+                <option value="Primary">Primary Goal</option>
+
+                <option value="Secondary">Secondary Goal</option>
+              </select>
+
+              <button id="addGoal">Add Goal</button>
+            </div>
 
-                <li data-section="tasks">
-                    ✅ Tasks
-                </li>
+            <div id="goalsList"></div>
+          </div>
+        </section>
 
-                <li data-section="goals">
-                    🎯 Goals
-                </li>
+        <!--------------------------------------- CALENDAR ------------------------------------------------------>
 
-                <li data-section="calendar">
-                    📅 Calendar
-                </li>
+        <section id="calendarSection" class="content-section">
+          <div class="calendar-card">
+            <h2>📅 Calendar</h2>
 
-                <li data-section="learning">
-                    📚 Learning
-                </li>
+            <div class="calendar-header">
+              <button id="prevMonth">◀</button>
 
-                <li data-section="focus">
-                    ⏱ Focus
-                </li>
+              <h3 id="monthYear"></h3>
 
-                <li data-section="analytics">
-                    📊 Analytics
-                </li>
+              <button id="nextMonth">▶</button>
+            </div>
 
-                <li data-section="settings">
-                    ⚙ Settings
-                </li>
-
-            </ul>
-        </aside>
-
-        <!-- Main -->
-        <main class="main">
-
-            <!-- Header -->
-            <header>
-
-                <h1>Welcome Back 👋</h1>
-
-                <div class="header-actions">
-
-                    <input type="text" id="search" placeholder="Search tasks...">
-
-                    <button id="theme-toggle">
-                        🌙
-                    </button>
-
-                </div>
-
-            </header>
-
-            <!-- DASHBOARD -->
-            <section id="dashboardSection" class="content-section active-section">
-
-                <section class="stats">
-
-                    <div class="card yellow">
-                        <h3>Total Tasks</h3>
-                        <p id="totalTasks">0</p>
-                    </div>
-
-                    <div class="card blue">
-                        <h3>Pending</h3>
-                        <p id="pendingTasks">0</p>
-                    </div>
-
-                    <div class="card orange">
-                        <h3>Ongoing</h3>
-                        <p id="ongoingTasks">0</p>
-                    </div>
-
-                    <div class="card green">
-                        <h3>Completed</h3>
-                        <p id="completedTasks">0</p>
-                    </div>
-
-                </section>
-
-                <section class="progress-card">
-
-                    <h3>Progress</h3>
-
-                    <div class="progress-bar">
-
-                        <div id="progressFill"></div>
-
-                    </div>
-
-                    <span id="progressText">0%</span>
-
-                </section>
-
-            </section>
-
-            <!-- TASKS -->
-            <section id="tasksSection" class="content-section">
-
-                <section class="task-form">
-
-                    <input id="taskInput" placeholder="Enter task">
-
-                    <select id="priority">
-
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-
-                    </select>
-
-                    <select id="category">
-
-                        <option value="Learning">Learning</option>
-                        <option value="Work">Work</option>
-                        <option value="Personal">Personal</option>
-
-                    </select>
-
-                    <input type="date" id="dueDate">
-
-                    <button type="button" id="addTask">
-                        Add Task
-                    </button>
-
-                </section>
-
-                <section class="filters">
-
-                    <select id="statusFilter">
-
-                        <option value="all">All Tasks</option>
-
-                        <option value="Pending">Pending</option>
-
-                        <option value="Ongoing">Ongoing</option>
-
-                        <option value="Completed">Completed</option>
-
-                    </select>
-
-                </section>
-
-                <section class="task-section">
-
-                    <ul id="taskList"></ul>
-
-                </section>
-
-            </section>
-
-            <!-- GOALS -->
-            <section id="goalsSection" class="content-section">
-
-                <div class="card">
-
-                    <h2>🎯 Goals</h2>
-
-                    <br>
-
-                    <p>Build Portfolio Website</p>
-                    <progress value="80" max="100"></progress>
-
-                    <br><br>
-
-                    <p>Master React JS</p>
-                    <progress value="60" max="100"></progress>
-
-                    <br><br>
-
-                    <p>Get Software Engineer Job</p>
-                    <progress value="40" max="100"></progress>
-
-                </div>
-
-            </section>
-
-            <!-- CALENDAR -->
-            <section id="calendarSection" class="content-section">
-
-                <div class="calendar-card">
-
-                    <h2>📅 Calendar</h2>
-
-                    <br>
-
-                    <div id="todayDate"></div>
-
-                </div>
-
-            </section>
-
-            <!-- LEARNING -->
-            <section id="learningSection" class="content-section">
-
-                <div class="card">
-
-                    <h2>📚 Learning Hub</h2>
-
-                    <br>
-
-                    <ul>
-
-                        <li>JavaScript Fundamentals</li>
-
-                        <li>React JS Projects</li>
-
-                        <li>Node.js Backend</li>
-
-                        <li>DSA Problem Solving</li>
-
-                        <li>System Design Basics</li>
-
-                    </ul>
-
-                </div>
-
-            </section>
-
-            <!-- FOCUS -->
-            <section id="focusSection" class="content-section">
-
-                <div class="card">
-
-                    <h2>⏱ Focus Timer</h2>
-
-                    <br>
-
-                    <h1 id="timer">25:00</h1>
-
-                    <br>
-
-                    <button id="startTimer">
-                        Start Pomodoro
-                    </button>
-
-                </div>
-
-            </section>
-
-            <!-- ANALYTICS -->
-            <section id="analyticsSection" class="content-section">
-
-                <div class="card">
-
-                    <h2>📊 Analytics</h2>
-
-                    <br>
-
-                    <p>Weekly Productivity: 82%</p>
-
-                    <p>Completed Tasks: 45</p>
-
-                    <p>Focus Sessions: 12</p>
-
-                    <p>Total Study Hours: 28 hrs</p>
-
-                </div>
-
-            </section>
-
-            <!-- SETTINGS -->
-            <section id="settingsSection" class="content-section">
-
-                <div class="card">
-
-                    <h2>⚙ Settings</h2>
-
-                    <br>
-
-                    <button id="theme-toggle">
-                        Toggle Theme
-                    </button>
-
-                    <br><br>
-
-                    <button id="clearTasks">
-                        Clear All Tasks
-                    </button>
-
-                </div>
-
-            </section>
-
-        </main>
-
+            <div class="calendar-grid">
+              <div class="day-name">Sun</div>
+              <div class="day-name">Mon</div>
+              <div class="day-name">Tue</div>
+              <div class="day-name">Wed</div>
+              <div class="day-name">Thu</div>
+              <div class="day-name">Fri</div>
+              <div class="day-name">Sat</div>
+            </div>
+
+            <div id="calendar"></div>
+          </div>
+        </section>
+
+        <!-- NOTES SECTION -->
+
+        <section id="learningSection" class="content-section">
+          <div class="notes-container">
+            <h2>📝 Notes</h2>
+
+            <div class="keep-input">
+              <input type="text" id="noteTitle" placeholder="Title" />
+
+              <textarea
+                id="noteContent"
+                placeholder="Take a note..."
+              ></textarea>
+
+              <button id="addNote">➕ Add Note</button>
+            </div>
+
+            <div id="notesGrid" class="notes-grid"></div>
+          </div>
+        </section>
+
+        <!------------------------------------ FOCUS TIMER ------------------------------------>
+        <section id="focusSection" class="content-section">
+          <div class="card focus-card">
+            <h2>⏱ Focus Timer</h2>
+
+            <br />
+
+            <div class="timer-settings">
+              <label> Session Time (Minutes) </label>
+
+              <input type="number" id="sessionInput" min="1" value="25" />
+            </div>
+
+            <br />
+
+            <h1 id="timer">25:00</h1>
+
+            <br />
+
+            <div class="timer-buttons">
+              <button id="startTimer">▶ Start</button>
+
+              <button id="pauseTimer">⏸ Pause</button>
+
+              <button id="resetTimer">🔄 Reset</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ANALYTICS -->
+        <section id="analyticsSection" class="content-section">
+          <div class="analytics-container">
+            <h2>📊 Task Analytics</h2>
+
+            <div class="analytics-table-wrapper">
+              <table class="analytics-table">
+                <thead>
+                  <tr>
+                    <th>Task</th>
+                    <th>Priority</th>
+                    <th>Category</th>
+                    <th>Started</th>
+                    <th>Deadline</th>
+                    <th>Completed</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody id="analyticsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="settingsSection" class="content-section">
+          <div class="card settings-card">
+            <h2>⚙ Settings</h2>
+
+            <p class="settings-description">
+              Manage your application preferences
+            </p>
+
+            <button id="clearTasks" class="danger-btn">
+              🗑 Clear All Tasks
+            </button>
+          </div>
+        </section>
+      </main>
     </div>
 
     <!-- Edit Modal -->
     <div id="editModal" class="modal">
+      <div class="modal-content">
+        <button id="closeModal" class="close-btn">✖</button>
 
-        <div class="modal-content">
+        <h2>Edit Task</h2>
 
-            <button id="closeModal" class="close-btn">
+        <input type="text" id="editInput" />
 
-                ✖
+        <button id="saveEdit">Save Changes</button>
+      </div>
+    </div>
+    <!-- CLEAR TASKS MODAL -->
+    <div id="clearModal" class="modal">
+      <div class="modal-content">
+        <button id="closeClearModal" class="close-btn">✖</button>
 
-            </button>
+        <h2>Delete All Tasks</h2>
 
-            <h2>Edit Task</h2>
+        <p>Are you sure you want to clear all tasks?</p>
 
-            <input type="text" id="editInput">
+        <div class="modal-actions">
+          <button id="cancelClear" class="cancel-btn">Cancel</button>
 
-            <button id="saveEdit">
-
-                Save Changes
-
-            </button>
-
+          <button id="confirmClear" class="danger-btn">Confirm</button>
         </div>
-
+      </div>
     </div>
 
-</body>
-
+    <!--------------------------------- SUCCESS TOAST ------------------------------->
+    <div id="toast" class="toast">✅ Tasks cleared successfully!</div>
+  </body>
 </html>
